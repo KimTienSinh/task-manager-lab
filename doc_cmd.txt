@@ -1,0 +1,57 @@
+docker-compose down
+docker-compose up --build
+
+docker exec -it task_postgres psql -U postgres -d taskdb
+\dt
+
+docker exec -it task_nestjs npm run migration:run
+docker exec -it task_nestjs npm install pg
+docker exec -it task_nestjs npm run build
+docker exec -it task_nestjs npm run migration:generate --name=CreateTableTask
+
+
+docker-compose down -v
+docker-compose up -d --build
+docker exec -it task-manager-api npm run migration:generate -- src/migrations/CreateTaskTable -d src/data-source.ts
+docker exec -it task-manager-api npm run migration:run
+
+
+docker exec -it task-manager-db psql -U postgres -d task_manager
+docker logs task-manager-api
+
+
+docker-compose restart api
+
+
+
+
+==================================================
+npm install @nestjs/apollo @apollo/server graphql
+npm install class-validator
+
+
+
+==================================================
+mutation {
+  createTask(input: {
+    title: "Viết báo cáo",
+    description: "Viết báo cáo tuần",
+    completed: false
+  }) {
+    id
+    title
+    description
+    completed
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  tasks {
+    id
+    title
+    createdAt
+    updatedAt
+  }
+}
