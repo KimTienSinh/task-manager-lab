@@ -1,0 +1,14 @@
+{
+  "type": "postgres",
+  "host": "postgres", 
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "task_manager",
+  "entities": ["src/**/*.entity.ts"],
+  "migrations": ["src/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  },
+  "synchronize": false
+}

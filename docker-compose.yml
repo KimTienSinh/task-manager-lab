@@ -1,0 +1,32 @@
+
+version: '3.8'
+
+services:
+  api:
+    image: node:16
+    container_name: task-manager-api
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=${DB_HOST}    # Sử dụng biến môi trường từ .env
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+
+  db:
+    image: postgres:13
+    container_name: task-manager-db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}    # Sử dụng biến môi trường từ .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
