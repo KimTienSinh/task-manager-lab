@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config'; // Thêm ConfigModule
 import { TaskModule } from './task/task.module';
 import { Task } from './task/task.entity';
@@ -13,8 +14,11 @@ import { Task } from './task/task.entity';
       isGlobal: true, // Đảm bảo cấu hình có thể sử dụng ở mọi nơi
     }),
 
-    GraphQLModule.forRoot({
-      autoSchemaFile: true, // tự động tạo schema từ code-first
+     GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: 'schema.gql',
+      playground: true, // Bật GraphQL Playground (dù Apollo 4 không khuyến nghị)
+      sortSchema: true,
     }),
 
     TypeOrmModule.forRoot({

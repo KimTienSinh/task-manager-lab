@@ -1,23 +1,32 @@
-// task.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Length } from 'class-validator';
 
+@ObjectType()
 @Entity()
 export class Task {
+  @Field()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
+  @Length(3)
   title: string;
 
+  @Field({ nullable: true })
   @Column({ nullable: true })
   description?: string;
 
+  @Field()
   @Column({ default: false })
   completed: boolean;
 
-  @Column()
+  @Field()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column()
+  @Field()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }

@@ -15,7 +15,7 @@ services:
       - db
     environment:
       - NODE_ENV=development
-      - DB_HOST=${DB_HOST}    # Sử dụng biến môi trường từ .env
+      - DB_HOST=${DB_HOST}   
       - DB_PORT=${DB_PORT}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -25,8 +25,13 @@ services:
     image: postgres:13
     container_name: task-manager-db
     environment:
-      POSTGRES_USER: ${DB_USERNAME}    # Sử dụng biến môi trường từ .env
+      POSTGRES_USER: ${DB_USERNAME}    
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
