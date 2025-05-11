@@ -8,7 +8,9 @@ install nodejs, docker desktop, git
 2. In root folder project
 
 open cmd: 
-2.1 npm install @nestjs/graphql @nestjs/typeorm graphql typeorm pg
+2.1 
+- npm install @nestjs/graphql @nestjs/typeorm graphql typeorm pg
+- npm install typeorm-cli
 
 2.2 docker-compose down -v (clear all)
 2.3 docker-compose up --build
