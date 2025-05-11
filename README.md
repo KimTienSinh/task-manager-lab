@@ -1,29 +1,62 @@
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-Setup and run:
-install nodejs, docker desktop, git
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-1. git clone https://github.com/KimTienSinh/task-manager-lab.git
+## Description
 
-2. In root folder project
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-open cmd: 
-2.1 
+## Project setup
+
+```bash
+$ install nodejs, docker desktop, git
+
+```
+
+## Compile and run the project
+
+```bash
+# git clone
+- git clone https://github.com/KimTienSinh/task-manager-lab.git
+
+# In root folder project open cmd:
 - npm install @nestjs/graphql @nestjs/typeorm graphql typeorm pg
 - npm install typeorm-cli
 
-2.2 docker-compose down -v (clear all)
-2.3 docker-compose up --build
-2.4 docker ps (view list container)
-2.5 docker exec -it task-manager-api npm run migration:generate -- src/migrations/CreateTaskTable -d src/data-source.ts (create migration file)
-2.6 docker exec -it task-manager-api npm run migration:run (run migration update to db)
+- docker-compose down -v
+- docker-compose up --build
+- docker ps
 
-2.7 docker exec -it task-manager-db psql -U postgres -d task_manager (log to container)
-2.8 SELECT * FROM task; 
+# migration
+- docker exec -it task-manager-api npm run migration:generate -- src/migrations/CreateTaskTable -d src/data-source.ts
+- docker exec -it task-manager-api npm run migration:run
 
-2.9 check http://localhost:3000/graphql
+# Sql
+- docker exec -it task-manager-db psql -U postgres -d task_manager
+- SELECT * FROM task;
 
-======================GraphQL Schema Requirements======================
+- check http://localhost:3000/graphql
+
+## GraphQL Schema Requirements
 mutation {
   createTask(input: {
     title: "Viết báo cáo",
@@ -41,7 +74,7 @@ mutation {
 
 mutation {
   updateTask(id: 4, input: {
-    title: "báo cáo đã sửa",
+    title: "ca4",
     completed: true
   }) {
     id
@@ -76,4 +109,3 @@ query {
     updatedAt
   }
 }
-
