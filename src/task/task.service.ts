@@ -1,9 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Task } from './task.entity';
-import { CreateTaskInput } from './dto/create-task.input';
-import { UpdateTaskInput } from './dto/update-task.input';
+import { Repository, Like, FindOptionsWhere } from 'typeorm';
+import { Task } from './entities/task.entity';
+import { CreateTaskInput } from './dtos/create-task.input';
+import { UpdateTaskInput } from './dtos/update-task.input';
+import { TaskFilterInput } from './dtos/task-filter.input';
+import { PaginationInput } from './dtos/pagination.input';
+import { CustomBadRequestException } from '../common/exceptions/bad-request.exception';
+import { validate } from 'class-validator';
+
 
 @Injectable()
 export class TaskService {
@@ -12,8 +17,27 @@ export class TaskService {
     private taskRepository: Repository<Task>,
   ) {}
 
-  async findAll(): Promise<Task[]> {
-    return this.taskRepository.find();
+  async findAll(filter?: TaskFilterInput, pagination?: PaginationInput): Promise<Task[]> {
+    const where: FindOptionsWhere<Task> = {};
+
+    if (filter?.completed !== undefined) {
+      where.completed = filter.completed;
+    }
+
+    if (filter?.titleContains) {
+      where.title = Like(`%${filter.titleContains}%`);
+    }
+
+    if (pagination?.limit && pagination.limit > 50) {
+    throw new CustomBadRequestException('limit must not be greater than 50');
+    }
+
+    return this.taskRepository.find({
+      where,
+      skip: pagination?.offset ?? 0,
+      take: pagination?.limit ?? 10,
+      order: { createdAt: 'DESC' },
+    });
   }
 
   async findOne(id: number): Promise<Task> {

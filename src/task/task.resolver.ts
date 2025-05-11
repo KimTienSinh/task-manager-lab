@@ -1,17 +1,30 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { TaskService } from './task.service';
-import { Task } from './task.entity';
-import { CreateTaskInput } from './dto/create-task.input';
-import { UpdateTaskInput } from './dto/update-task.input';
+import { Task } from './entities/task.entity';
+import { CreateTaskInput } from './dtos/create-task.input';
+import { UpdateTaskInput } from './dtos/update-task.input';
+import { TaskFilterInput } from './dtos/task-filter.input';
+import { PaginationInput } from './dtos/pagination.input';
 
 @Resolver(() => Task)
 export class TaskResolver {
   constructor(private readonly taskService: TaskService) {}
 
   @Query(() => [Task])
-  async tasks() {
-    return this.taskService.findAll();
+  async tasks(
+    @Args('filter', { nullable: true }) filter?: TaskFilterInput,
+    @Args('pagination', { nullable: true }) pagination?: PaginationInput,) 
+  {
+    return this.taskService.findAll(filter, pagination);
   }
+
+  // @Query(() => [Task])
+  // async tasks(
+  //   @Args('filter', { type: () => TaskFilterInput, nullable: true }) filter?: TaskFilterInput,
+  //   @Args('pagination', { type: () => PaginationInput, nullable: true }) pagination?: PaginationInput,
+  // ): Promise<Task[]> {
+  //   return this.taskService.findAll(filter, pagination);
+  // }
 
   @Query(() => Task)
   async task(@Args('id', { type: () => Int }) id: number) {

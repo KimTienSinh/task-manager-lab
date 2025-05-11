@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config'; // Thêm ConfigModule
 import { TaskModule } from './task/task.module';
-import { Task } from './task/task.entity';
+import { Task } from './task/entities/task.entity';
 
 @Module({
   imports: [

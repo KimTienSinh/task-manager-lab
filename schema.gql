@@ -19,9 +19,14 @@ type Mutation {
   updateTask(id: Int!, input: UpdateTaskInput!): Task!
 }
 
+input PaginationInput {
+  limit: Int
+  offset: Int
+}
+
 type Query {
   task(id: Int!): Task!
-  tasks: [Task!]!
+  tasks(filter: TaskFilterInput, pagination: PaginationInput): [Task!]!
 }
 
 type Task {
@@ -31,6 +36,11 @@ type Task {
   id: Float!
   title: String!
   updatedAt: DateTime!
+}
+
+input TaskFilterInput {
+  completed: Boolean
+  titleContains: String
 }
 
 input UpdateTaskInput {

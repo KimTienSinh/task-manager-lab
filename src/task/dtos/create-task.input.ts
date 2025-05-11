@@ -4,8 +4,8 @@ import { IsNotEmpty, MinLength, IsOptional, IsBoolean } from 'class-validator';
 @InputType()
 export class CreateTaskInput {
   @Field()
-  @IsNotEmpty()
-  @MinLength(3)
+  @IsNotEmpty({ message: 'Title is required' })
+  @MinLength(3, { message: 'Title must be at least 3 characters long' })
   title: string;
 
   @Field({ nullable: true })
