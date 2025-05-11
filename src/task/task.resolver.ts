@@ -18,13 +18,6 @@ export class TaskResolver {
     return this.taskService.findAll(filter, pagination);
   }
 
-  // @Query(() => [Task])
-  // async tasks(
-  //   @Args('filter', { type: () => TaskFilterInput, nullable: true }) filter?: TaskFilterInput,
-  //   @Args('pagination', { type: () => PaginationInput, nullable: true }) pagination?: PaginationInput,
-  // ): Promise<Task[]> {
-  //   return this.taskService.findAll(filter, pagination);
-  // }
 
   @Query(() => Task)
   async task(@Args('id', { type: () => Int }) id: number) {

@@ -1,14 +1,3 @@
-docker-compose down
-docker-compose up --build
-
-docker exec -it task_postgres psql -U postgres -d taskdb
-\dt
-
-docker exec -it task_nestjs npm run migration:run
-docker exec -it task_nestjs npm install pg
-docker exec -it task_nestjs npm run build
-docker exec -it task_nestjs npm run migration:generate --name=CreateTableTask
-
 
 docker-compose down -v
 docker-compose up -d --build
@@ -17,9 +6,12 @@ docker exec -it task-manager-api npm run migration:run
 
 
 docker exec -it task-manager-db psql -U postgres -d task_manager
+\dt
+SELECT * FROM task;
+TRUNCATE TABLE task RESTART IDENTITY;
+
+
 docker logs task-manager-api
-
-
 docker-compose restart api
 
 
@@ -31,7 +23,7 @@ npm install class-validator
 
 
 
-==================================================
+======================GraphQL Schema Requirements======================
 mutation {
   createTask(input: {
     title: "Viết báo cáo",
@@ -47,10 +39,39 @@ mutation {
   }
 }
 
-query {
-  tasks {
+mutation {
+  updateTask(id: 4, input: {
+    title: "ca4",
+    completed: true
+  }) {
     id
     title
+    completed
+  }
+}
+
+mutation {
+  deleteTask(id: 4)
+}
+
+query {
+  tasks(
+    filter: { completed: true, titleContains: "cáo" }
+    pagination: { limit: 10, offset: 0 }
+  ) {
+    id
+    title
+    completed
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  task(id: 4) {
+    id
+    title
+    completed
     createdAt
     updatedAt
   }
