@@ -38,7 +38,7 @@ $ install nodejs, docker desktop, git
 # git clone
 - git clone https://github.com/KimTienSinh/task-manager-lab.git
 
-# In root folder project open cmd:
+# In root folder project task-manager-lab open cmd:
 - npm install @nestjs/graphql @nestjs/typeorm graphql typeorm pg
 - npm install typeorm-cli
 
