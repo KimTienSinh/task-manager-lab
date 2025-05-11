@@ -50,7 +50,6 @@ $ install nodejs, docker desktop, git
 - docker exec -it task-manager-api npm run migration:generate -- src/migrations/CreateTaskTable -d src/data-source.ts
 - docker exec -it task-manager-api npm run migration:run
 
-# Sql
 - docker exec -it task-manager-db psql -U postgres -d task_manager
 - SELECT * FROM task;
 
